@@ -18,17 +18,17 @@ export function computeSlin(ml) {
   return parseFloat(result.toFixed(4));
 }
 
-export function calculatePeptideConcentration(
-  amountPowder,
-  amountWater,
-  desiredDose
-) {
-  console.log(amountPowder, amountWater, desiredDose);
-  const constituted = amountPowder / amountWater;
-  const dose = desiredDose / constituted;
-  const amount = dose * 100;
-  return { iu: dose, slin: amount };
-}
+// export function calculatePeptideConcentration(
+//   amountPowder,
+//   amountWater,
+//   desiredDose
+// ) {
+//   console.log(amountPowder, amountWater, desiredDose);
+//   const constituted = amountPowder / amountWater;
+//   const dose = desiredDose / constituted;
+//   const amount = dose * 100;
+//   return { iu: dose, slin: amount };
+// }
 
 // To calculate how many units to draw into an insulin syringe, you can use the following formula:
 

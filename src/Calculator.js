@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-
+import Select from "@mui/joy/Select";
+import Option from "@mui/joy/Option";
 import DropDown from "./Dropdown";
 import Results from "./Results";
 
@@ -13,11 +14,11 @@ function Calculator() {
     { id: 3, name: "250 mg/ml", value: 250 },
   ];
   const frequencyOptions = [
-    { id: 1, name: "Once Per Week", value: 1 },
-    { id: 2, name: "Twice Per Week", value: 2 },
-    { id: 3, name: "Three Times Per Week", value: 3 },
+    { id: 1, name: "Once Per Week", value: 1.0 },
+    { id: 2, name: "Twice Per Week", value: 2.0 },
+    { id: 3, name: "Three Times Per Week", value: 3.0 },
     { id: 4, name: "Every Other Day", value: 3.5 },
-    { id: 5, name: "Daily", value: 7 },
+    { id: 5, name: "Daily", value: 7.0 },
   ];
 
   const [selectedConcentration, setSelectedConcentration] = useState(null);
@@ -25,15 +26,13 @@ function Calculator() {
   const [selectedWeeklyDose, setSelectedWeeklyDose] = useState(null);
   const [calculationTimeout, setCalculationTimeout] = useState(null);
 
-  const handleConcentrationChange = (event) => {
-    console.log(event);
-    setSelectedConcentration(event.target.value);
+  const handleConcentrationChange = (event, newValue) => {
+    setSelectedConcentration(newValue);
   };
 
-  const handleFrequencyChange = (event) => {
-    setSelectedFrequency(event.target.value);
+  const handleFrequencyChange = (event, newValue) => {
+    setSelectedFrequency(newValue);
   };
-
   const handleWeeklyDose = (event) => {
     let inputWeeklyDose = event.target.value;
     clearTimeout(calculationTimeout);
@@ -54,7 +53,7 @@ function Calculator() {
   };
 
   return (
-    <Sheet textAlign="center" p={4}>
+    <Sheet p={4}>
       <Typography variant="h5" gutterBottom>
         Testosterone Dose Calculator
       </Typography>
@@ -65,22 +64,31 @@ function Calculator() {
           inputValue={selectedWeeklyDose}
           handleKey={handleKeyPress}
         />
-        <DropDown
-          title={"Select Testosterone Vial Concentration"}
-          values={concentrationOptions}
-          selectedValue={selectedConcentration}
-          handler={handleConcentrationChange}
-        />
-        <DropDown
-          title={"Select Injection Frequency"}
-          values={frequencyOptions}
-          selectedValue={selectedFrequency}
-          handler={handleFrequencyChange}
-        />
+
+        <Select
+          placeholder={"Vial Concentration"}
+          onChange={handleConcentrationChange}
+        >
+          {concentrationOptions.map((option) => (
+            <Option key={option.id} value={option.value}>
+              {option.name}
+            </Option>
+          ))}
+        </Select>
+
+        <Select
+          placeholder={"Injection Frequency"}
+          onChange={handleFrequencyChange}
+        >
+          {frequencyOptions.map((option) => (
+            <Option key={option.id} value={option.value}>
+              {option.name} 
+            </Option>
+          ))}
+        </Select>
       </Stack>
       {selectedWeeklyDose && selectedConcentration && selectedFrequency && (
         <Results
-          isTrt={true}
           max={30}
           weeklyAmt={selectedWeeklyDose}
           frequency={selectedFrequency}
