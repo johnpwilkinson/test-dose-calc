@@ -1,11 +1,23 @@
 import "./App.css";
-import Calculator from "./Calculator";
-
+import Calculator from "./components/Calculator";
+import { CssVarsProvider } from '@mui/joy/styles';
+import CssBaseline from '@mui/joy/CssBaseline';
 function App() {
   return (
-    <div className="App">
+    <CssVarsProvider>
+      <CssBaseline />
+    <div
+      className="App"
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: "1rem",
+      }}
+      >
       <Calculator />
     </div>
+      </CssVarsProvider>
   );
 }
 
